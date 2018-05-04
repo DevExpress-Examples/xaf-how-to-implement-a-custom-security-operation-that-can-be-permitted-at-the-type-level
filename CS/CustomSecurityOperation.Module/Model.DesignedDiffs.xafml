@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application Title="CustomSecurityOperation" Logo="ExpressAppLogo">
+  <NavigationItems>
+    <Items>
+      <Item Id="Default" IsNewNode="True">
+        <Items IsNewNode="True">
+          <Item Id="Task" ViewId="Task_ListView" ImageName="BO_Task" IsNewNode="True" />
+        </Items>
+      </Item>
+    </Items>
+  </NavigationItems>
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="16.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemWindowsFormsModule" Version="12.2.5.0" IsNewNode="True" />
+  </SchemaModules>
+  <Views>
+    <DetailView Id="CustomTypePermissionObject_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="28.675136116152451">
+            <LayoutGroup Id="CustomTypePermissionObject" RelativeSize="24.050632911392405" Caption="Export">
+              <LayoutItem Id="TargetType" ViewItem="TargetType" Index="0" RelativeSize="100" IsNewNode="True" />
+              <LayoutItem Id="ExportState" Index="1" RelativeSize="48.387096774193552" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PermissionPolicyTypePermissionObject" RelativeSize="75.9493670886076">
+              <LayoutGroup Id="PermissionPolicyTypePermissionObject_col1" RelativeSize="50.06765899864682">
+                <LayoutItem Id="ReadState" Index="0" RelativeSize="36.363636363636367" />
+                <LayoutItem Id="WriteState" Index="1" RelativeSize="27.272727272727273" />
+                <LayoutItem Id="CreateState" ViewItem="CreateState" Index="2" RelativeSize="36.363636363636367" IsNewNode="True" />
+                <LayoutItem Id="TargetType" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="PermissionPolicyTypePermissionObject_col2" RelativeSize="49.93234100135318">
+                <LayoutItem Id="DeleteState" RelativeSize="36.363636363636367" Index="0" />
+                <LayoutItem Id="NavigateState" RelativeSize="27.272727272727273" Index="1" />
+                <LayoutItem Id="ExportState" ViewItem="ExportState" Index="2" RelativeSize="36.363636363636367" IsNewNode="True" />
+                <LayoutItem Id="CreateState" RelativeSize="36.363636363636367" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="71.324863883847556">
+            <LayoutGroup Id="MemberPermissions" RelativeSize="100">
+              <LayoutItem Id="MemberPermissions" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="ObjectPermissions" RelativeSize="100">
+              <LayoutItem Id="ObjectPermissions" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="PermissionPolicyRoleBase_TypePermissions_ListView">
+      <Columns>
+        <ColumnInfo Id="ExportState" PropertyName="&lt;CustomTypePermissionObject&gt;ExportState" IsNewNode="True" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

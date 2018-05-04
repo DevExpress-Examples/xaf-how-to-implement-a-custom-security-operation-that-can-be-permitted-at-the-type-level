@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <ListView Id="SecuritySystemTypePermissionsObjectOwner_TypePermissions_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="Object" Width="100" />
+        <ColumnInfo Id="AllowRead" Width="112" />
+        <ColumnInfo Id="AllowWrite" Width="112" />
+        <ColumnInfo Id="AllowCreate" Width="112" />
+        <ColumnInfo Id="AllowDelete" Width="112" />
+        <ColumnInfo Id="AllowNavigate" Width="106" />
+        <ColumnInfo Id="AllowExport" PropertyName="&lt;CustomTypePermissionObject&gt;AllowExport" Width="86" />
+      </Columns>
+    </ListView>
+    <DetailView Id="CustomTypePermissionObject_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="SecuritySystemTypePermissionsObjectBase" Removed="True" />
+            <LayoutGroup Id="CustomTypePermissionObject">
+              <LayoutItem Id="AllowExport" ViewItem="AllowExport" Removed="True" />
+              <LayoutGroup Id="Auto39ea7fb0-7cde-4b8a-8f95-b969f4c436d0">
+                <LayoutGroup Id="Auto0e3e0a44-28d1-45fe-bf11-0e4955ad7229">
+                  <LayoutItem Id="AllowExport" ViewItem="AllowExport" />
+                  <LayoutItem Id="AllowNavigate" ViewItem="AllowNavigate" />
+                  <LayoutItem Id="AllowDelete" ViewItem="AllowDelete" />
+                </LayoutGroup>
+                <LayoutGroup Id="Autocda3ddad-302c-4743-9a10-6fd724780498">
+                  <LayoutItem Id="AllowCreate" ViewItem="AllowCreate" />
+                  <LayoutItem Id="AllowWrite" ViewItem="AllowWrite" />
+                  <LayoutItem Id="AllowRead" ViewItem="AllowRead" />
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>
