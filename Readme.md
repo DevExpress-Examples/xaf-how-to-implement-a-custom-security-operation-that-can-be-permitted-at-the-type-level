@@ -1,6 +1,6 @@
 # How To: Implement a custom security operation that can be permitted at the type level
 <!-- run online -->
-**[[Run Online]](https://codecentral.devexpress.com/e4483)**
+**[[Run Online]](https://codecentral.devexpress.com/e4483/)**
 <!-- run online end -->
 
 
