@@ -30,7 +30,7 @@ namespace CustomSecurityOperation.Module {
         }
         public Type ObjectType { get; private set; }
         public object GetHashObject() {
-            return this.GetType().FullName;
+            return ObjectType.FullName;
         }
     }
 
