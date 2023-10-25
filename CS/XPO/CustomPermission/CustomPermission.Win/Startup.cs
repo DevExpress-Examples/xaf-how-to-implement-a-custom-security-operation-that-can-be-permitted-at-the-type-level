@@ -9,6 +9,8 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.XtraEditors;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 using DevExpress.ExpressApp.Design;
+using CustomPermission.Module.BusinessObjects;
+using CustomPermission.Module.Security;
 
 namespace CustomPermission.Win;
 
@@ -28,7 +30,7 @@ public class ApplicationBuilder : IDesignTimeApplicationFactory {
                 options.AllowValidationDetailsAccess = false;
             })
             .Add<CustomPermission.Module.CustomPermissionModule>()
-        	.Add<CustomPermissionWinModule>();
+            .Add<CustomPermissionWinModule>();
         builder.ObjectSpaceProviders
             .AddSecuredXpo((application, options) => {
                 options.ConnectionString = connectionString;
@@ -41,20 +43,42 @@ public class ApplicationBuilder : IDesignTimeApplicationFactory {
                 options.UserLoginInfoType = typeof(CustomPermission.Module.BusinessObjects.ApplicationUserLoginInfo);
                 options.UseXpoPermissionsCaching();
                 options.Events.OnSecurityStrategyCreated += securityStrategy => {
-                   // Use the 'PermissionsReloadMode.NoCache' option to load the most recent permissions from the database once
-                   // for every Session instance when secured data is accessed through this instance for the first time.
-                   // Use the 'PermissionsReloadMode.CacheOnFirstAccess' option to reduce the number of database queries.
-                   // In this case, permission requests are loaded and cached when secured data is accessed for the first time
-                   // and used until the current user logs out. 
-                   // See the following article for more details: https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Security.SecurityStrategy.PermissionsReloadMode.
-                   ((SecurityStrategy)securityStrategy).PermissionsReloadMode = PermissionsReloadMode.NoCache;
+                    // Use the 'PermissionsReloadMode.NoCache' option to load the most recent permissions from the database once
+                    // for every Session instance when secured data is accessed through this instance for the first time.
+                    // Use the 'PermissionsReloadMode.CacheOnFirstAccess' option to reduce the number of database queries.
+                    // In this case, permission requests are loaded and cached when secured data is accessed for the first time
+                    // and used until the current user logs out. 
+                    // See the following article for more details: https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Security.SecurityStrategy.PermissionsReloadMode.
+                    ((SecurityStrategy)securityStrategy).PermissionsReloadMode = PermissionsReloadMode.NoCache;
+                    ((SecurityStrategy)securityStrategy).CustomizeRequestProcessors += delegate (object sender, CustomizeRequestProcessorsEventArgs e) {
+                        List<IOperationPermission> result = new List<IOperationPermission>();
+                        SecurityStrategyComplex security = sender as SecurityStrategyComplex;
+                        if (security != null) {
+                            ApplicationUser user = security.User as ApplicationUser;
+                            if (user != null) {
+                                foreach (PermissionPolicyRole role in user.Roles) {
+                                    foreach (PermissionPolicyTypePermissionObject persistentPermission in role.TypePermissions) {
+                                        CustomTypePermissionObject customPermission = persistentPermission as CustomTypePermissionObject;
+                                        if (customPermission != null && customPermission.ExportState != null) {
+                                            SecurityPermissionState state = (SecurityPermissionState)customPermission.ExportState;
+                                            result.Add(new ExportPermission(customPermission.TargetType, state));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        IPermissionDictionary permissionDictionary = new PermissionDictionary(result);
+                        e.Processors.Add(typeof(ExportPermissionRequest), new ExportPermissionRequestProcessor(permissionDictionary));
+                        // ...
+                    };
                 };
+
             })
             .UsePasswordAuthentication();
         builder.AddBuildStep(application => {
             application.ConnectionString = connectionString;
 #if DEBUG
-            if(System.Diagnostics.Debugger.IsAttached && application.CheckCompatibilityType == CheckCompatibilityType.DatabaseSchema) {
+            if (System.Diagnostics.Debugger.IsAttached && application.CheckCompatibilityType == CheckCompatibilityType.DatabaseSchema) {
                 application.DatabaseUpdateMode = DatabaseUpdateMode.UpdateDatabaseAlways;
             }
 #endif

@@ -22,4 +22,7 @@
     <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="23.1.6" />
     <PackageReference Include="DevExpress.ExpressApp.Validation.Blazor" Version="23.1.6" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CustomPermission.Module\CustomPermission.Module.csproj" />
+  </ItemGroup>
 </Project>

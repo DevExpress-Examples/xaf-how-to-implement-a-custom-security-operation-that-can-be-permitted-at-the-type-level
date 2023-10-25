@@ -10,6 +10,8 @@ using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 using CustomPermission.Module.BusinessObjects;
+using CustomPermission.Module.Security;
+using dxTestSolution.Module.BusinessObjects;
 
 namespace CustomPermission.Module.DatabaseUpdate;
 
@@ -72,21 +74,40 @@ public class Updater : ModuleUpdater {
         //}
     }
     private PermissionPolicyRole CreateDefaultRole() {
-        PermissionPolicyRole defaultRole = ObjectSpace.FirstOrDefault<PermissionPolicyRole>(role => role.Name == "Default");
-        if(defaultRole == null) {
-            defaultRole = ObjectSpace.CreateObject<PermissionPolicyRole>();
-            defaultRole.Name = "Default";
+        PermissionPolicyRole userRole = ObjectSpace.FirstOrDefault<PermissionPolicyRole>(role => role.Name == "Default");
+        if(userRole == null) {
+            userRole = ObjectSpace.CreateObject<PermissionPolicyRole>();
+            userRole.Name = "Default";
 
-			defaultRole.AddObjectPermissionFromLambda<ApplicationUser>(SecurityOperations.Read, cm => cm.Oid == (Guid)CurrentUserIdOperator.CurrentUserId(), SecurityPermissionState.Allow);
-            defaultRole.AddNavigationPermission(@"Application/NavigationItems/Items/Default/Items/MyDetails", SecurityPermissionState.Allow);
-			defaultRole.AddMemberPermissionFromLambda<ApplicationUser>(SecurityOperations.Write, "ChangePasswordOnFirstLogon", cm => cm.Oid == (Guid)CurrentUserIdOperator.CurrentUserId(), SecurityPermissionState.Allow);
-			defaultRole.AddMemberPermissionFromLambda<ApplicationUser>(SecurityOperations.Write, "StoredPassword", cm => cm.Oid == (Guid)CurrentUserIdOperator.CurrentUserId(), SecurityPermissionState.Allow);
-            defaultRole.AddTypePermissionsRecursively<PermissionPolicyRole>(SecurityOperations.Read, SecurityPermissionState.Deny);
-            defaultRole.AddTypePermissionsRecursively<ModelDifference>(SecurityOperations.ReadWriteAccess, SecurityPermissionState.Allow);
-            defaultRole.AddTypePermissionsRecursively<ModelDifferenceAspect>(SecurityOperations.ReadWriteAccess, SecurityPermissionState.Allow);
-			defaultRole.AddTypePermissionsRecursively<ModelDifference>(SecurityOperations.Create, SecurityPermissionState.Allow);
-            defaultRole.AddTypePermissionsRecursively<ModelDifferenceAspect>(SecurityOperations.Create, SecurityPermissionState.Allow);
+            userRole.AddNavigationPermission(@"Application/NavigationItems/Items/Default/Items/MyDetails", SecurityPermissionState.Allow);
+            userRole.AddTypePermissionsRecursively<PermissionPolicyRole>(SecurityOperations.Read, SecurityPermissionState.Deny);
+         //   userRole.AddTypePermissionsRecursively<MyTask>(SecurityOperations.Read, SecurityPermissionState.Allow);
+            userRole.AddTypePermissionsRecursively<ModelDifference>(SecurityOperations.ReadWriteAccess, SecurityPermissionState.Allow);
+            userRole.AddTypePermissionsRecursively<ModelDifferenceAspect>(SecurityOperations.ReadWriteAccess, SecurityPermissionState.Allow);
+			userRole.AddTypePermissionsRecursively<ModelDifference>(SecurityOperations.Create, SecurityPermissionState.Allow);
+            userRole.AddTypePermissionsRecursively<ModelDifferenceAspect>(SecurityOperations.Create, SecurityPermissionState.Allow);
+
+            CustomTypePermissionObject taskTypePermission = ObjectSpace.CreateObject<CustomTypePermissionObject>();
+            taskTypePermission.TargetType = typeof(EmployeeTask);
+            taskTypePermission.CreateState = SecurityPermissionState.Allow;
+            taskTypePermission.DeleteState = SecurityPermissionState.Allow;
+            taskTypePermission.ReadState = SecurityPermissionState.Allow;
+            taskTypePermission.WriteState = SecurityPermissionState.Allow;
+            taskTypePermission.ExportState = SecurityPermissionState.Allow;
+            CustomTypePermissionObject userTypePermission = ObjectSpace.CreateObject<CustomTypePermissionObject>();
+            userTypePermission.TargetType = typeof(ApplicationUser);
+            userTypePermission.ReadState = SecurityPermissionState.Allow;
+            userRole.TypePermissions.Add(taskTypePermission);
+            userRole.TypePermissions.Add(userTypePermission);
+            userRole.AddNavigationPermission(@"Application/NavigationItems/Items/Default/Items/MyDetails", SecurityPermissionState.Allow);
+            userRole.AddNavigationPermission(@"Application/NavigationItems/Items/Default/Items/EmployeeTask_ListView", SecurityPermissionState.Allow);
+            userRole.AddNavigationPermission(@"Application/NavigationItems/Items/Default/Items/MyTask_ListView", SecurityPermissionState.Allow);
+
+            CustomTypePermissionObject mytaskTypePermission = ObjectSpace.CreateObject<CustomTypePermissionObject>();
+            mytaskTypePermission.TargetType = typeof(MyTask);
+            mytaskTypePermission.ReadState = SecurityPermissionState.Allow;
+            userRole.TypePermissions.Add(mytaskTypePermission);
         }
-        return defaultRole;
+        return userRole;
     }
 }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="CustomPermission">
   <BOModel>
     <Class Name="DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser" Caption="Base User" />
@@ -6,7 +6,48 @@
   <Options>
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="23.1.6.0" IsNewNode="True" />
+  </SchemaModules>
   <Views>
     <ListView Id="ApplicationUser_ListView" Caption="Users" />
+    <DetailView Id="CustomTypePermissionObject_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="14.535768645357686">
+            <LayoutGroup Id="CustomTypePermissionObject" Caption="Export" RelativeSize="7.329842931937173">
+              <LayoutItem Id="ExportState" Removed="True" />
+            </LayoutGroup>
+            <LayoutItem Id="TargetType" ViewItem="TargetType" Index="1" RelativeSize="15.706806282722512" IsNewNode="True" />
+            <LayoutGroup Id="PermissionPolicyTypePermissionObject" RelativeSize="76.96335078534031" Index="2">
+              <LayoutGroup Id="PermissionPolicyTypePermissionObject_col1" RelativeSize="49.961210240496506">
+                <LayoutItem Id="ExportState" ViewItem="ExportState" Index="0" RelativeSize="35.84905660377358" IsNewNode="True" />
+                <LayoutItem Id="ReadState" Index="1" RelativeSize="28.30188679245283" />
+                <LayoutItem Id="WriteState" Index="2" RelativeSize="35.84905660377358" />
+                <LayoutItem Id="TargetType" RelativeSize="27.941176470588236" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="PermissionPolicyTypePermissionObject_col2" RelativeSize="50.038789759503494">
+                <LayoutItem Id="CreateState" RelativeSize="35.84905660377358" />
+                <LayoutItem Id="DeleteState" RelativeSize="28.30188679245283" />
+                <LayoutItem Id="NavigateState" RelativeSize="35.84905660377358" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="85.46423135464231">
+            <LayoutGroup Id="MemberPermissions" RelativeSize="100">
+              <LayoutItem Id="MemberPermissions" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="ObjectPermissions" RelativeSize="100">
+              <LayoutItem Id="ObjectPermissions" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="PermissionPolicyRoleBase_TypePermissions_ListView">
+      <Columns>
+        <ColumnInfo Id="ExportState" PropertyName="&lt;CustomTypePermissionObject&gt;ExportState" IsNewNode="True" />
+      </Columns>
+    </ListView>
   </Views>
 </Application>

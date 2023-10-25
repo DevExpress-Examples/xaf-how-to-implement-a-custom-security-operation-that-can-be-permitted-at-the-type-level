@@ -40,4 +40,7 @@
     <PackageReference Include="DevExpress.RichEdit.Export" Version="23.1.6" />
     <PackageReference Include="DevExpress.Win.Design" Version="23.1.6" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CustomPermission.Module\CustomPermission.Module.csproj" />
+  </ItemGroup>
 </Project>

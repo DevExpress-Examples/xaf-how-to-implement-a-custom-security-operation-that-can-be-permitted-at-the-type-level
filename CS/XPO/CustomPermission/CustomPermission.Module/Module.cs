@@ -13,6 +13,7 @@ using DevExpress.ExpressApp.Model.DomainLogics;
 using DevExpress.ExpressApp.Model.NodeGenerators;
 using DevExpress.Xpo;
 using DevExpress.ExpressApp.Xpo;
+using CustomPermission.Module.DatabaseUpdate;
 
 namespace CustomPermission.Module;
 
@@ -32,7 +33,7 @@ public sealed class CustomPermissionModule : ModuleBase {
     }
     public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB) {
         ModuleUpdater updater = new DatabaseUpdate.Updater(objectSpace, versionFromDB);
-        return new ModuleUpdater[] { updater };
+        return new ModuleUpdater[] { updater, new MyUpdater(objectSpace, versionFromDB) };
     }
     public override void Setup(XafApplication application) {
         base.Setup(application);

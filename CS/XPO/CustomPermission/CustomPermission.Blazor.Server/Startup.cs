@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Components.Server.Circuits;
 using DevExpress.ExpressApp.Xpo;
 using CustomPermission.Blazor.Server.Services;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
+using CustomPermission.Module.BusinessObjects;
+using CustomPermission.Module.Security;
 
 namespace CustomPermission.Blazor.Server;
 
@@ -71,6 +73,29 @@ public class Startup {
                         // and used until the current user logs out. 
                         // See the following article for more details: https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Security.SecurityStrategy.PermissionsReloadMode.
                         ((SecurityStrategy)securityStrategy).PermissionsReloadMode = PermissionsReloadMode.NoCache;
+                    };
+                    options.Events.OnSecurityStrategyCreated += securityStrategy => {
+                        ((SecurityStrategy)securityStrategy).CustomizeRequestProcessors += delegate (object sender, CustomizeRequestProcessorsEventArgs e) {
+                            List<IOperationPermission> result = new List<IOperationPermission>();
+                            SecurityStrategyComplex security = sender as SecurityStrategyComplex;
+                            if (security != null) {
+                                ApplicationUser user = security.User as ApplicationUser;
+                                if (user != null) {
+                                    foreach (PermissionPolicyRole role in user.Roles) {
+                                        foreach (PermissionPolicyTypePermissionObject persistentPermission in role.TypePermissions) {
+                                            CustomTypePermissionObject customPermission = persistentPermission as CustomTypePermissionObject;
+                                            if (customPermission != null && customPermission.ExportState != null) {
+                                                SecurityPermissionState state = (SecurityPermissionState)customPermission.ExportState;
+                                                result.Add(new ExportPermission(customPermission.TargetType, state));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            IPermissionDictionary permissionDictionary = new PermissionDictionary(result);
+                            e.Processors.Add(typeof(ExportPermissionRequest), new ExportPermissionRequestProcessor(permissionDictionary));
+                            // ...
+                        };
                     };
                 })
                 .AddPasswordAuthentication(options => {
