@@ -1,4 +1,0 @@
-<?xml version="1.0"?>
-<Tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Date="1/29/2013">
-  <Test Name="ExportOperationTest" ApplicationName="CustomSecurityOperation.Win" Result="Passed" Elapsed="00:00:12.0960099" Started="1/29/2013 1:55:50 PM" MachineName="BELYAKOV-SV-N" IP="172.22.1.63" />
-</Tests>

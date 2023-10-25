@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Application>
-  <Options Skin="Visual Studio 2013 Blue" />
-  <SchemaModules>
-    <SchemaModule Name="SystemModule" Version="16.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SystemWindowsFormsModule" Version="16.1.4.0" IsNewNode="True" />
-  </SchemaModules>
-</Application>
