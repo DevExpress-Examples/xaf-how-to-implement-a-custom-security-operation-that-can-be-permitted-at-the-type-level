@@ -15,12 +15,11 @@ namespace CustomPermission.Module.Controllers {
         protected override void OnActivated() {
             base.OnActivated();
             exportController = Frame.GetController<ExportController>();
+
             if (exportController != null) {
-                exportController.ExportAction.Executing += ExportAction_Executing;
-                if (SecuritySystem.Instance is IRequestSecurity) {
-                    exportController.Active.SetItemValue("Security",
-                        Application.GetSecurityStrategy().IsGranted(new ExportPermissionRequest(View.ObjectTypeInfo.Type)));
-                }
+               // exportController.ExportAction.Executing += ExportAction_Executing;
+                exportController.ExportAction.Active.SetItemValue("Security",
+                           Application.GetSecurityStrategy().IsGranted(new ExportPermissionRequest(View.ObjectTypeInfo.Type)));
             }
         }
         void ExportAction_Executing(object sender, System.ComponentModel.CancelEventArgs e) {
@@ -28,5 +27,6 @@ namespace CustomPermission.Module.Controllers {
                 throw new UserFriendlyException("Export operation is prohibited.");
             }
         }
+   
     }
 }
