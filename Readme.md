@@ -5,7 +5,7 @@
 
 # XAF - How to implement a custom security operation that can be permitted at the type level
 
-This example shows how to create a custom operation permission that allows you to prohibit the export operation when using Security System.
+This example shows how to create a custom operation permission that allows you to prohibit the export operation when using the Security System.
  
 <kbd>![image](https://github.com/DevExpress-Examples/how-to-implement-a-custom-security-operation-that-can-be-permitted-at-the-type-level-e4483/assets/14300209/20f09f79-d943-47fc-9008-a7b6bc72b588)</kbd>
 
