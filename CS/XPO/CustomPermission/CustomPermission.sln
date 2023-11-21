@@ -3,12 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomPermission.Blazor.Server", "CustomPermission.Blazor.Server\CustomPermission.Blazor.Server.csproj", "{C0B5A3C6-AA9D-48FD-B580-3B990D328C65}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomPermission.Module", "CustomPermission.Module\CustomPermission.Module.csproj", "{C336E9BF-0052-497B-9112-890C7837BEB4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomPermission.Win", "CustomPermission.Win\CustomPermission.Win.csproj", "{78DCF7AB-D9ED-4BF1-8563-26FCD2EED637}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomPermission.Blazor.Server", "CustomPermission.Blazor.Server\CustomPermission.Blazor.Server.csproj", "{C0B5A3C6-AA9D-48FD-B580-3B990D328C65}"
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

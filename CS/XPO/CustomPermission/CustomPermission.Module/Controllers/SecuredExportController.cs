@@ -1,13 +1,7 @@
 ﻿using CustomPermission.Module.Security;
+using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CustomPermission.Module.Controllers {
     public class SecuredExportController : ObjectViewController {
@@ -17,9 +11,8 @@ namespace CustomPermission.Module.Controllers {
             exportController = Frame.GetController<ExportController>();
 
             if (exportController != null) {
-               // exportController.ExportAction.Executing += ExportAction_Executing;
-                exportController.ExportAction.Active.SetItemValue("Security",
-                           Application.GetSecurityStrategy().IsGranted(new ExportPermissionRequest(View.ObjectTypeInfo.Type)));
+                // exportController.ExportAction.Executing += ExportAction_Executing; //uncomment this line and comment the next one to show error when a user executes the prohibited action
+                exportController.ExportAction.Active.SetItemValue("Security", Application.GetSecurityStrategy().IsGranted(new ExportPermissionRequest(View.ObjectTypeInfo.Type)));
             }
         }
         void ExportAction_Executing(object sender, System.ComponentModel.CancelEventArgs e) {
@@ -27,6 +20,6 @@ namespace CustomPermission.Module.Controllers {
                 throw new UserFriendlyException("Export operation is prohibited.");
             }
         }
-   
+
     }
 }

@@ -64,6 +64,23 @@ public class Updater : ModuleUpdater {
         }
         adminRole.IsAdministrative = true;
 		userAdmin.Roles.Add(adminRole);
+
+        var cnt = ObjectSpace.GetObjects<EmployeeTask>().Count;
+        if (cnt > 0) {
+            return;
+        }
+        for (int i = 0; i < 5; i++) {
+            var contact = ObjectSpace.CreateObject<EmployeeTask>();
+            contact.FirstName = "FirstName" + i;
+            contact.LastName = "LastName" + i;
+            contact.Age = i * 10;
+            for (int j = 0; j < 2; j++) {
+                var task = ObjectSpace.CreateObject<MyTask>();
+                task.Subject = "Subject" + i + " - " + j;
+                task.AssignedTo = contact;
+            }
+        }
+
         ObjectSpace.CommitChanges(); //This line persists created object(s).
 #endif
     }
