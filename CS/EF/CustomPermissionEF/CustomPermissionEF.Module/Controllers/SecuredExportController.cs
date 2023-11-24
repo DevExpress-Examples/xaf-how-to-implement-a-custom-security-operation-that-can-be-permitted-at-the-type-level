@@ -11,7 +11,7 @@ namespace CustomPermission.Module.Controllers {
             exportController = Frame.GetController<ExportController>();
 
             if (exportController != null) {
-                // exportController.ExportAction.Executing += ExportAction_Executing; //uncomment this line and comment the next one to show error when a user executes the prohibited action
+                // exportController.ExportAction.Executing += ExportAction_Executing; // Uncomment this line and comment the next one to show the error when a user performs the forbidden action
                 exportController.ExportAction.Active.SetItemValue("Security", Application.GetSecurityStrategy().IsGranted(new ExportPermissionRequest(View.ObjectTypeInfo.Type)));
             }
         }
