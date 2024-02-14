@@ -4,9 +4,6 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 <!-- default badges end -->
 # How To: Implement a custom security operation that can be permitted at the type level
-<!-- run online -->
-**[[Run Online]](https://codecentral.devexpress.com/132128333/)**
-<!-- run online end -->
 
 
 <p>In the XAF Security System, the following operations can be permitted for a specific type by default: <em>Read</em>, <em>Write</em>, <em>Create</em>, <em>Delete </em>and <em>Navigate</em>. In this topic, an implementation of the additional <em>Export </em>operation is shown. The customization of the <strong>ExportController </strong>which should consider whether or not the <em>Export </em>operation is allowed for the currently displayed object type is also demonstrated.</p>
