@@ -21,7 +21,6 @@ public class CustomPermissionEFWindowsFormsApplication : WinApplication {
 		SplashScreen = new DXSplashScreen(typeof(XafSplashScreen), new DefaultOverlayFormOptions());
         ApplicationName = "CustomPermissionEF";
         CheckCompatibilityType = DevExpress.ExpressApp.CheckCompatibilityType.DatabaseSchema;
-        UseOldTemplates = false;
         DatabaseVersionMismatch += CustomPermissionEFWindowsFormsApplication_DatabaseVersionMismatch;
         CustomizeLanguagesList += CustomPermissionEFWindowsFormsApplication_CustomizeLanguagesList;
     }
